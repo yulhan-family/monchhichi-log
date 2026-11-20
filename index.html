@@ -768,6 +768,67 @@ body[data-kid="han"] .tip .n{background:var(--yellow-pale);color:var(--yellow-in
   .money{font-size:2.2rem}
 }
 
+/* ===== 요일별 수정 (2026-11-20) ===== */
+.dayBar{display:flex;align-items:center;gap:0.4rem;flex:none;padding:0.28rem 0.5rem;border-radius:0.9rem;
+  background:rgba(255,255,255,.68);border:1px solid var(--line-2);box-shadow:var(--shadow-sm)}
+.dayBar .lbl{display:flex;align-items:center;gap:0.2rem;font-size:0.68rem;color:var(--ink-soft);flex:none;letter-spacing:-.02em}
+.dayBar .lbl svg{width:0.78rem;height:0.78rem;color:var(--accent-deep)}
+.dayChips{display:flex;gap:0.14rem;flex:1;min-width:0;flex-wrap:wrap}
+.dayChips button{position:relative;display:inline-flex;align-items:center;gap:0.16rem;padding:0.16rem 0.44rem;border-radius:999px;
+  border:1px solid var(--line);background:#fff;font-size:0.72rem;color:var(--ink-soft);transition:background .15s,border-color .15s,color .15s}
+.dayChips button:hover{background:var(--accent-soft);border-color:var(--pink-mid);color:var(--ink)}
+.dayChips button b{font-family:var(--f-title);font-weight:400;font-size:0.78rem;color:var(--accent-deep);font-variant-numeric:tabular-nums}
+.dayChips button i{position:absolute;right:-0.02rem;top:-0.02rem;width:0.34rem;height:0.34rem;border-radius:50%;background:var(--sky);border:1px solid #fff}
+.dayBar .barNote{margin-left:auto;letter-spacing:-.02em}
+.dayBar .barNote b{color:var(--ink-soft)}
+.wkDay .dowEdit{display:inline-flex;align-items:center;gap:0.14rem;margin-top:0.06rem;padding:0.06rem 0.3rem;border-radius:999px;
+  font-size:0.56rem;color:var(--ink-faint);letter-spacing:-.02em;align-self:flex-start}
+.wkDay .dowEdit:hover{background:var(--accent-soft);color:var(--accent-deep)}
+.wkDay .dowEdit svg{width:0.6rem;height:0.6rem}
+.sc-row.ent{width:100%;text-align:left;cursor:pointer}
+.sc-row.ent:hover{background:#FFF6FA;border-color:#FBD9E4}
+
+/* 요일 편집 시트 */
+.sheet.wide{width:min(40rem,100%)}
+.dayEdit{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;margin-top:0.45rem}
+.deCol{display:flex;flex-direction:column;gap:0.28rem;min-width:0;background:#FFFDF8;border:1px solid var(--line-2);
+  border-radius:0.9rem;padding:0.5rem 0.55rem;max-height:46dvh}
+.deHead{display:flex;align-items:center;gap:0.3rem;font-size:0.7rem;color:var(--ink-faint)}
+.deHead b{font-family:var(--f-title);font-weight:400;font-size:0.94rem;color:var(--ink)}
+.deHead .note{margin-left:auto}
+.deList{display:flex;flex-direction:column;gap:0.22rem;overflow-y:auto;min-height:5.5rem;padding-right:0.1rem;scrollbar-width:thin}
+.deRow{display:flex;align-items:center;gap:0.22rem;background:#fff;border:1px solid var(--line-2);border-radius:0.6rem;
+  padding:0.18rem 0.28rem;width:100%;text-align:left;transition:background .15s,border-color .15s}
+.deRow input[type=text]{flex:1;min-width:0;border:0;background:transparent;font-size:0.82rem;padding:0.16rem 0.2rem;
+  color:var(--ink);letter-spacing:-.02em}
+.deRow input[type=text]:focus{outline:none;background:#FFF8FB;border-radius:0.4rem;box-shadow:0 0 0 2px var(--pink-soft)}
+.deRow .tag{font-size:0.54rem;padding:0.04rem 0.24rem;border-radius:999px;border:1px solid #F3D98E;background:#FFF3C4;color:#8A6412;flex:none}
+.deRow .b{width:1.4rem;height:1.4rem;border-radius:50%;display:grid;place-items:center;color:#C9B7A5;flex:none}
+.deRow .b:hover{background:#FFF0F5;color:#C9627F}
+.deRow .b.off:hover{background:#FFF7EC;color:var(--ink-soft)}
+.deRow .b svg{width:0.66rem;height:0.66rem}
+.deRow.ent{font-size:0.78rem;color:var(--ink);gap:0.3rem}
+.deRow.ent:hover{background:#FFF8FB;border-color:#FBD9E4}
+.deRow.ent .tm{flex:none;font-size:0.64rem;color:var(--sky-ink);background:var(--sky-soft);border-radius:0.35rem;
+  padding:0.02rem 0.24rem;font-variant-numeric:tabular-nums}
+.deRow.ent .tt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.02em}
+.deRow.ent .pp{margin-left:auto;flex:none;font-size:0.6rem;color:var(--yellow-ink);background:var(--yellow-pale);border-radius:0.35rem;padding:0.02rem 0.22rem}
+.deRow.ent .edit{flex:none;color:#C9B7A5;display:grid;place-items:center}
+.deRow.ent .edit svg{width:0.66rem;height:0.66rem}
+.deKid{width:max-content;margin-top:0.45rem}
+.daySeg button{padding:0.2rem 0.44rem}
+
+@media (max-width:900px){
+  .viewChips button{padding:0.2rem 0.16rem;font-size:0.64rem}
+  .dayBar{flex-wrap:wrap;gap:0.25rem;padding:0.3rem 0.45rem}
+  .dayBar .barNote{display:none}
+  .dayChips{width:100%;gap:0.12rem}
+  .dayChips button{flex:1;justify-content:center;padding:0.2rem 0.1rem}
+  .dayEdit{grid-template-columns:1fr}
+  .deCol{max-height:34dvh}
+  .deRow input[type=text]{font-size:0.88rem}
+}
+
 </style>
 </head>
 <body data-kid="yul">
@@ -858,8 +919,13 @@ body[data-kid="han"] .tip .n{background:var(--yellow-pale);color:var(--yellow-in
           <div class="fl">
             <div class="viewChips" id="viewChips" aria-label="보기 선택">
               <button data-view="today" aria-pressed="true">오늘</button>
-              <button data-view="weekday" aria-pressed="false">평일</button>
-              <button data-view="sat" aria-pressed="false">토요일</button>
+              <button data-view="day" data-dow="1" aria-pressed="false">월</button>
+              <button data-view="day" data-dow="2" aria-pressed="false">화</button>
+              <button data-view="day" data-dow="3" aria-pressed="false">수</button>
+              <button data-view="day" data-dow="4" aria-pressed="false">목</button>
+              <button data-view="day" data-dow="5" aria-pressed="false">금</button>
+              <button data-view="day" data-dow="6" aria-pressed="false">토</button>
+              <button data-view="day" data-dow="0" aria-pressed="false">일</button>
               <button data-view="week" aria-pressed="false">주간</button>
             </div>
             <button class="tbtn" id="addBtn"><svg><use href="#i-plus"/></svg><span class="lbl">할 일</span></button>
@@ -908,6 +974,11 @@ body[data-kid="han"] .tip .n{background:var(--yellow-pale);color:var(--yellow-in
           <button data-sub="cal" aria-pressed="false">달력</button>
         </div>
         <div class="fl"><button class="btn sm" id="weekPrev"><svg><use href="#i-left"/></svg>지난주</button><button class="btn sm" id="weekNext">다음주<svg><use href="#i-right"/></svg></button></div>
+      </div>
+      <div class="dayBar" id="weekDayBar">
+        <span class="lbl"><svg><use href="#i-edit"/></svg>요일별 수정</span>
+        <div class="dayChips" id="weekDayChips"></div>
+        <span class="note barNote">요일을 누르면 그 요일 <b>할 일·일정</b>을 한 번에 고칠 수 있어요</span>
       </div>
       <div class="weekWrap" id="weekView">
         <div class="wkHead"><span>요일</span><span class="h2">학원 · 방과후 · 준비물</span><span class="h2">오늘 할 일</span></div>
@@ -994,7 +1065,7 @@ body[data-kid="han"] .tip .n{background:var(--yellow-pale);color:var(--yellow-in
             <h3>기본 할 일 목록<span class="hint">아이·요일별로 추가/수정/삭제</span></h3>
             <div class="setRow">
               <div class="seg" id="setKid"><button data-kid="yul" aria-pressed="true">율</button><button data-kid="han" aria-pressed="false">한</button></div>
-              <div class="seg" id="setType"><button data-type="weekday" aria-pressed="true">평일</button><button data-type="sat" aria-pressed="false">토요일</button><button data-type="sun" aria-pressed="false">일요일</button></div>
+              <div class="seg daySeg" id="setType"><button data-type="mon" aria-pressed="false">월</button><button data-type="tue" aria-pressed="false">화</button><button data-type="wed" aria-pressed="false">수</button><button data-type="thu" aria-pressed="false">목</button><button data-type="fri" aria-pressed="true">금</button><button data-type="sat" aria-pressed="false">토</button><button data-type="sun" aria-pressed="false">일</button></div>
               <button class="btn sm" id="setAdd" style="margin-left:auto"><svg><use href="#i-plus"/></svg>추가</button>
             </div>
             <div class="itemList" id="setList"></div>
@@ -1068,6 +1139,10 @@ window.MONCH = {
 const IMG = window.MONCH || {};
 const KEY = 'monchhichi.v1';
 const DOW = ['일','월','화','수','목','금','토'];
+/* 요일별 기본 할 일 키 — 순서는 Date.getDay()와 같습니다(0=일 … 6=토) */
+const DKEY = ['sun','mon','tue','wed','thu','fri','sat'];
+const DLABEL = { sun:'일', mon:'월', tue:'화', wed:'수', thu:'목', fri:'금', sat:'토' };
+const DAY_ORDER = [1,2,3,4,5,6,0];   /* 화면에 보여줄 순서 월→일 */
 const KIDS = {
   yul: { name:'율', age:'11살', role:'토끼', img:IMG.yul, face:IMG.yulFace, tone:'pink', color:'#E2749A' },
   han: { name:'한', age:'10살', role:'병아리', img:IMG.han, face:IMG.hanFace, tone:'yellow', color:'#D8A93B' }
@@ -1087,7 +1162,7 @@ const todayStr = () => ymd(new Date());
 const addDays = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() + n); return x; };
 const monStart = d => { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); return addDays(x, -((x.getDay() + 6) % 7)); };
 const weekOffsetFor = ds => Math.round((monStart(parseYmd(ds)) - monStart(new Date())) / (7 * 86400000));
-const dayType = s => { const w = parseYmd(s).getDay(); return w === 6 ? 'sat' : (w === 0 ? 'sun' : 'weekday'); };
+const dayKeyOf = s => DKEY[parseYmd(s).getDay()];   /* 날짜 → 요일 키 */
 const clone = o => JSON.parse(JSON.stringify(o));
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money = n => Number(n || 0).toLocaleString('ko-KR');
@@ -1095,25 +1170,63 @@ const mdn = s => { const d = parseYmd(s); return (d.getMonth() + 1) + '월 ' + d
 const isnum = v => !isNaN(parseInt(v, 10));
 
 /* ---------------- 기본값 ---------------- */
+/* 요일별 기본 할 일. 월~금은 같은 목록을 쓰고(같은 id), 토요일 2개, 일요일은 비어 있습니다.
+   id는 예전 '평일/토요일' 때 쓰던 값을 그대로 이어받아, 기기에 남아 있던 날짜별 기록과 어긋나지 않습니다. */
+const WEEKDAY_BASE = [
+  { id:'w1', text:'구몬한자' }, { id:'w2', text:'수학숙제' }, { id:'w3', text:'영어숙제' },
+  { id:'w4', text:'학교 준비물 체크' }
+];
 function defaultTemplates() {
-  return {
-    yul: {
-      weekday: [
-        { id:'y-w1', text:'구몬한자' }, { id:'y-w2', text:'수학숙제' }, { id:'y-w3', text:'영어숙제' },
-        { id:'y-w4', text:'학교 준비물 체크' }, { id:'y-w5', text:'연산문제집 꼭!', badge:'꼭!' }
-      ],
-      sat: [ { id:'y-s1', text:'구몬' }, { id:'y-s2', text:'수학, 영어 미리 숙제하기' } ],
-      sun: []
-    },
-    han: {
-      weekday: [
-        { id:'h-w1', text:'구몬한자' }, { id:'h-w2', text:'수학숙제' }, { id:'h-w3', text:'영어숙제' },
-        { id:'h-w4', text:'학교 준비물 체크' }, { id:'h-w5', text:'하,삼,글' }
-      ],
-      sat: [ { id:'h-s1', text:'구몬' }, { id:'h-s2', text:'수학, 영어 미리 숙제하기' } ],
-      sun: []
-    }
-  };
+  const out = {};
+  ORDER.forEach(kid => {
+    const p = kid === 'yul' ? 'y' : 'h';
+    const last = kid === 'yul'
+      ? { id:p + '-w5', text:'연산문제집 꼭!', badge:'꼭!' }
+      : { id:p + '-w5', text:'하,삼,글' };
+    const weekday = WEEKDAY_BASE.map(it => ({ id:p + '-' + it.id, text:it.text })).concat(
+      last.badge ? [last] : [{ id:last.id, text:last.text }]
+    );
+    const week = {};
+    ['mon','tue','wed','thu','fri'].forEach(k => { week[k] = weekday.map(it => Object.assign({}, it)); });
+    week.sat = [ { id:p + '-s1', text:'구몬' }, { id:p + '-s2', text:'수학, 영어 미리 숙제하기' } ];
+    week.sun = [];
+    out[kid] = week;
+  });
+  return out;
+}
+/* 예전 상태(평일/토/일 3묶음) → 요일 7개로 옮기기 (id는 그대로 살림) */
+function migrateLegacyTemplates(t) {
+  const out = {};
+  ORDER.forEach(kid => {
+    const src = (t && t[kid]) || {};
+    const wd = Array.isArray(src.weekday) ? src.weekday : [];
+    const sat = Array.isArray(src.sat) ? src.sat : [];
+    const sun = Array.isArray(src.sun) ? src.sun : [];
+    const week = {};
+    ['mon','tue','wed','thu','fri'].forEach(k => { week[k] = clone(wd); });
+    week.sat = clone(sat);
+    week.sun = clone(sun);
+    out[kid] = week;
+  });
+  return out;
+}
+function normalizeTemplates(t) {
+  const out = {};
+  ORDER.forEach(kid => {
+    const src = (t && t[kid]) || {};
+    const hasDay = DKEY.some(k => Array.isArray(src[k]));
+    if (!hasDay) { out[kid] = migrateLegacyTemplates(t)[kid]; return; }
+    const week = {};
+    DKEY.forEach(k => {
+      week[k] = (Array.isArray(src[k]) ? src[k] : []).filter(x => x && x.id).map(x => {
+        const c = { id:x.id, text:String(x.text == null ? '' : x.text) };
+        if (x.badge) c.badge = x.badge;
+        return c;
+      });
+    });
+    out[kid] = week;
+  });
+  return out;
 }
 function defaultSchedule() {
   return {
@@ -1129,10 +1242,11 @@ function defaultSchedule() {
 function defaultState() {
   const t = new Date();
   return {
-    v: 1,
+    v: 2,
     kid: 'yul',
     tab: 'today',
     view: 'today',
+    viewDow: t.getDay(),
     selDate: todayStr(),
     weekOffset: 0,
     calMonth: { y: t.getFullYear(), m: t.getMonth() },
@@ -1159,12 +1273,14 @@ function loadState() {
     if (!raw) return base;
     const s = JSON.parse(raw);
     const merged = Object.assign(base, s || {});
-    merged.templates = Object.assign(defaultTemplates(), s.templates || {});
+    merged.templates = normalizeTemplates(s.templates);
     ORDER.forEach(k => {
       merged.templates[k] = Object.assign(defaultTemplates()[k], merged.templates[k] || {});
       merged.stickers[k] = Object.assign({ filled:0, completed:0, total:0 }, (s.stickers || {})[k] || {});
       merged.ledger[k] = Array.isArray((s.ledger || {})[k]) ? s.ledger[k] : [];
     });
+    if (['today','week','day'].indexOf(merged.view) < 0) merged.view = 'today';
+    if (typeof merged.viewDow !== 'number' || merged.viewDow < 0 || merged.viewDow > 6) merged.viewDow = new Date().getDay();
     merged.days = s.days || {};
     merged.schedule = Object.assign(defaultSchedule(), s.schedule || {});
     merged.timer = Object.assign({ preset:20, remaining:1200, running:false, endAt:null }, s.timer || {});
@@ -1189,14 +1305,14 @@ function dayEntry(kid, ds, create) {
   if (!state.days[ds]) { if (!create) return null; state.days[ds] = {}; }
   if (!state.days[ds][kid]) {
     if (!create) return null;
-    state.days[ds][kid] = { items: clone(state.templates[kid][dayType(ds)] || []), done: {} };
+    state.days[ds][kid] = { items: clone(state.templates[kid][dayKeyOf(ds)] || []), done: {} };
   }
   return state.days[ds][kid];
 }
 function itemsOf(kid, ds) {
   const e = dayEntry(kid, ds, false);
   if (e) return e.items;
-  return state.templates[kid][dayType(ds)] || [];
+  return state.templates[kid][dayKeyOf(ds)] || [];
 }
 function doneOf(kid, ds) { const e = dayEntry(kid, ds, false); return (e && e.done) || {}; }
 function countsOf(kid, ds) {
@@ -1382,14 +1498,16 @@ function renderProgress() {
   let done = 0, total = 0;
   if (state.view === 'week') {
     weekRangeOf(state.weekOffset).days.forEach(d => { const c = countsOf(kid, ymd(d)); done += c.done; total += c.total; });
-  } else if (state.view === 'weekday' || state.view === 'sat') {
-    const items = state.templates[kid][state.view], dd = doneOf(kid, ds);
+  } else if (state.view === 'day') {
+    const key = DKEY[state.viewDow];
+    const items = state.templates[kid][key] || [];
+    const dd = dayKeyOf(ds) === key ? doneOf(kid, ds) : {};
     total = items.length; items.forEach(i => { if (dd[i.id]) done++; });
   } else {
     const c = countsOf(kid, ds); done = c.done; total = c.total;
   }
   $('#pgWho').textContent = K.name;
-  $('#pgWhen').textContent = state.view === 'week' ? '이번 주' : (state.view === 'today' ? whenLabel(ds) : (state.view === 'sat' ? '토요일' : '평일'));
+  $('#pgWhen').textContent = state.view === 'week' ? '이번 주' : (state.view === 'day' ? DLABEL[DKEY[state.viewDow]] + '요일' : whenLabel(ds));
   $('#pgDone').textContent = done;
   $('#pgTotal').textContent = total;
   $('#pgFill').style.width = (total ? Math.round(done / total * 100) : 0) + '%';
@@ -1423,8 +1541,9 @@ function renderToday() {
   document.body.dataset.kid = kid;
   $('#whoName').textContent = K.name;
   $('#whoImg').src = K.face;
-  $('#whenText').textContent = state.view === 'today' ? whenLabel(ds) : (state.view === 'week' ? '이번 주' : (state.view === 'sat' ? '토요일' : '평일'));
-  $$('#viewChips button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === state.view ? 'true' : 'false'));
+  $('#whenText').textContent = state.view === 'today' ? whenLabel(ds) : (state.view === 'week' ? '이번 주' : DLABEL[DKEY[state.viewDow]] + '요일');
+  $$('#viewChips button').forEach(b => b.setAttribute('aria-pressed',
+    (b.dataset.view === 'day' ? (state.view === 'day' && Number(b.dataset.dow) === state.viewDow) : b.dataset.view === state.view) ? 'true' : 'false'));
   $('#editBtn').classList.toggle('on', !!state.editMode);
   $('#editBtn').setAttribute('aria-pressed', state.editMode ? 'true' : 'false');
 
@@ -1453,19 +1572,20 @@ function renderToday() {
   let items, dd, preview = false;
   if (state.view === 'today') {
     const e = dayEntry(kid, ds, false);
-    items = e ? e.items : clone(state.templates[kid][dayType(ds)]);
+    items = e ? e.items : clone(state.templates[kid][dayKeyOf(ds)]);
     dd = e ? e.done : {};
   } else {
-    items = state.templates[kid][state.view];
-    dd = doneOf(kid, ds);
+    const key = DKEY[state.viewDow];
+    items = state.templates[kid][key] || [];
+    dd = dayKeyOf(ds) === key ? doneOf(kid, ds) : {};
     preview = true;
   }
   if (items.length === 0) grid.classList.add('one');
   if (items.length > 0 && items.length <= 2) grid.classList.add('two');
 
   if (!items.length) {
-    grid.innerHTML = '<div class="emptyDay"><img src="' + K.img + '" alt=""><div><h3>' + (preview ? '이 요일은 비어 있어요' : '오늘은 쉬는 날이에요') + '</h3>' +
-      '<p>' + (preview ? '부모 설정에서 이 요일에 할 일을 추가해 보세요.' : '하고 싶은 걸 마음껏 즐기고, 내일 만나요!') + '</p>' +
+    grid.innerHTML = '<div class="emptyDay"><img src="' + K.img + '" alt=""><div><h3>' + (preview ? DLABEL[DKEY[state.viewDow]] + '요일은 비어 있어요' : '오늘은 쉬는 날이에요') + '</h3>' +
+      '<p>' + (preview ? '이 요일에 할 일을 추가해 두면 매주 ' + DLABEL[DKEY[state.viewDow]] + '요일에 그대로 나와요.' : '하고 싶은 걸 마음껏 즐기고, 내일 만나요!') + '</p>' +
       (state.editMode || preview ? '<button class="btn pink" data-act="add" style="margin-top:.5rem">할 일 추가하기</button>' : '') +
       '</div></div>';
   } else {
@@ -1476,7 +1596,7 @@ function renderToday() {
   if (preview) {
     grid.classList.add('preview');
     $$('.todo .check', grid).forEach(el => el.style.opacity = '.55');
-    hint.innerHTML = '<svg><use href="#i-info"/></svg>' + (state.view === 'sat' ? '토요일' : '평일') + ' 기본 목록 미리보기예요 · 체크는 해당 날짜의 ‘오늘’ 화면에서 해요';
+    hint.innerHTML = '<svg><use href="#i-edit"/></svg>' + DLABEL[DKEY[state.viewDow]] + '요일 기본 할 일이에요 · 연필로 고치면 매주 ' + DLABEL[DKEY[state.viewDow]] + '요일이 바뀌어요';
   } else if (state.editMode) {
     hint.innerHTML = '<svg><use href="#i-edit"/></svg>편집 중 · 연필로 고치고, 휴지통으로 지울 수 있어요';
   }
@@ -1585,19 +1705,49 @@ function renderStickerTab() {
 }
 
 /* 항목 삭제(체크돼 있으면 스티커·저금통도 함께 되돌림) */
-function removeItem(kid, ds, itemId, fromTemplate) {
-  if (fromTemplate) {
-    state.templates[kid][dayType(ds)] = state.templates[kid][dayType(ds)].filter(x => x.id !== itemId);
-    return;
-  }
+function dropLedgerRef(kid, ds, itemId) {
+  const ref = ds + '|' + itemId;
+  const i = (state.ledger[kid] || []).findIndex(x => x.ref === ref);
+  if (i >= 0) state.ledger[kid].splice(i, 1);
+  recomputeStickers();
+}
+function removeItem(kid, ds, itemId) {
   const e = dayEntry(kid, ds, true);
-  if (e.done[itemId]) {
-    delete e.done[itemId];
-    const i = state.ledger[kid].findIndex(x => x.ref === ds + '|' + itemId);
-    if (i >= 0) state.ledger[kid].splice(i, 1);
-    recomputeStickers();
-  }
+  if (e.done[itemId]) { delete e.done[itemId]; dropLedgerRef(kid, ds, itemId); }
   e.items = e.items.filter(x => x.id !== itemId);
+}
+/* 요일 기본 목록에서 지우기 (앞으로의 그 요일 + 아직 지나지 않은 날짜에도 반영) */
+function removeTemplateItem(kid, key, itemId) {
+  state.templates[kid][key] = (state.templates[kid][key] || []).filter(x => x.id !== itemId);
+  syncDayItems(kid, key);
+}
+
+/* 요일 기본 목록을 고치면, 아직 지나지 않은 그 요일 날짜들의 목록에도 바로 반영합니다.
+   (그 날짜에만 따로 추가한 항목(once)과 그 체크는 그대로 둡니다) */
+function syncDayItems(kid, key) {
+  const tpl = state.templates[kid][key] || [];
+  const today = todayStr();
+  Object.keys(state.days || {}).forEach(ds => {
+    if (ds < today || dayKeyOf(ds) !== key) return;
+    const e = state.days[ds][kid];
+    if (!e) return;
+    const old = e.items || [];
+    const once = old.filter(it => it.once);
+    old.forEach(it => {
+      if (it.once) return;
+      if (!tpl.some(t => t.id === it.id)) {
+        if (e.done[it.id]) { delete e.done[it.id]; dropLedgerRef(kid, ds, it.id); }
+      }
+    });
+    const next = tpl.map(t => {
+      const cur = old.find(x => x.id === t.id);
+      const c = cur ? Object.assign({}, cur, { text:t.text }) : { id:t.id, text:t.text };
+      if (t.badge) c.badge = t.badge; else delete c.badge;
+      return c;
+    }).concat(once);
+    e.items = next;
+  });
+  recomputeStickers();
 }
 
 /* 체크 토글 */
@@ -1687,7 +1837,8 @@ function renderWeekTab() {
       : '<span class="wkEmpty">쉬는 날</span>';
     return '<div class="wkRow' + (ds === todayStr() ? ' today' : '') + (w === 0 ? ' sun' : '') + '" data-dow="' + w + '">' +
       '<div class="wkDay"><div class="dow">' + DOW[w] + '<i>' + d.getDate() + '</i></div>' +
-        '<div class="cnt' + (full ? ' b' : '') + '">' + (c.total ? c.done + ' / ' + c.total + ' 완료' : '쉬는 날') + '</div></div>' +
+        '<div class="cnt' + (full ? ' b' : '') + '">' + (c.total ? c.done + ' / ' + c.total + ' 완료' : '쉬는 날') + '</div>' +
+        '<button class="dowEdit" data-act="edit-day" data-dow="' + w + '" aria-label="' + DOW[w] + '요일 할 일·일정 편집"><svg><use href="#i-edit"/></svg>' + DOW[w] + ' 편집</button></div>' +
       '<div class="wkSched">' + ents +
         '<button class="wkAdd" data-act="add-ent" data-dow="' + w + '" aria-label="일정 추가"><svg><use href="#i-plus"/></svg></button></div>' +
       '<div class="wkHw">' + hws + '</div>' +
@@ -1779,10 +1930,11 @@ function renderCalDetail() {
       '<button class="cdItem' + (dd[it.id] ? ' on' : '') + '" data-date="' + ds + '" data-item="' + it.id + '">' +
       '<span class="b"><svg><use href="#i-check"/></svg></span><span>' + esc(it.text) + '</span></button>').join('')
       : '<div class="note">이 날은 할 일이 없어요</div>') + '</div>' +
-    '<div class="cdSched"><div class="cdSchedHead">그날 일정<button class="btn sm ghost" data-act="add-cal-ent">+ 추가</button></div>' +
+    '<div class="cdSched"><div class="cdSchedHead">그날 일정<button class="btn sm ghost" data-act="edit-day" data-dow="' + w + '">' + DOW[w] + '요일 편집</button><button class="btn sm ghost" data-act="add-cal-ent">+ 추가</button></div>' +
       (sched.length ? sched.map(en =>
-        '<div class="sc-row"><span class="time">' + esc(en.time || '') + '</span><span class="tt">' + esc(en.title) + '</span>' +
-        (en.prep ? '<span class="prep">' + esc(en.prep) + '</span>' : '') + '</div>').join('')
+        '<button class="sc-row ent" data-ent="' + en.id + '" data-dow="' + w + '" title="눌러서 수정">' +
+        '<span class="time">' + esc(en.time || '') + '</span><span class="tt">' + esc(en.title) + '</span>' +
+        (en.prep ? '<span class="prep">' + esc(en.prep) + '</span>' : '') + '</button>').join('')
         : '<div class="note">일정이 없어요</div>') + '</div>' +
     '<div class="cdSum" style="margin-top:auto;border-top:1px dashed var(--line);padding-top:0.4rem">' +
       '<span class="chip ' + (sumOn(kid, ds) > 0 ? 'pink' : '') + '">이 날 저금통 ' + (sumOn(kid, ds) >= 0 ? '+' : '') + money(sumOn(kid, ds)) + '원</span>' +
@@ -1834,27 +1986,14 @@ function renderMiniLetters() {
   }).join('') : '<div class="sc-empty"><img src="' + KIDS[state.kid].img + '" alt=""><span>첫 쪽지를 남겨 보세요</span></div>';
 }
 
-/* 기본 목록의 이름/배지 수정은 이미 만들어진 오늘 이후 날짜에도 함께 반영 */
-function syncTemplateText(kid, type) {
-  const tpl = state.templates[kid][type];
-  const today = todayStr();
-  Object.keys(state.days).forEach(ds => {
-    if (ds < today || dayType(ds) !== type) return;
-    const e = state.days[ds][kid]; if (!e) return;
-    e.items.forEach(it => {
-      const t = tpl.find(x => x.id === it.id);
-      if (t) { it.text = t.text; if (t.badge) it.badge = t.badge; else delete it.badge; }
-    });
-  });
-}
-
 /* ---------------- 부모 설정 ---------------- */
-let setKid = 'yul', setType = 'weekday';
+let setKid = 'yul', setType = DKEY[new Date().getDay()];
 function renderSettings() {
   const list = $('#setList'); if (!list) return;
+  if (DKEY.indexOf(setType) < 0) setType = DKEY[new Date().getDay()];
   $$('#setKid button').forEach(b => b.setAttribute('aria-pressed', b.dataset.kid === setKid ? 'true' : 'false'));
   $$('#setType button').forEach(b => b.setAttribute('aria-pressed', b.dataset.type === setType ? 'true' : 'false'));
-  const items = state.templates[setKid][setType];
+  const items = state.templates[setKid][setType] || [];
   const focused = document.activeElement;
   const typing = !!(focused && focused.tagName === 'INPUT' && list.contains(focused));
   if (!typing) list.innerHTML = items.length ? items.map((it, i) =>
@@ -1878,6 +2017,7 @@ function renderAll() {
   renderMiniSticker();
   renderStickerTab();
   renderWeekTab();
+  renderWeekDayBar();
   renderCalendar();
   renderLetters();
   renderSettings();
@@ -1894,7 +2034,7 @@ function switchTab(tab) {
     if (on) p.removeAttribute('hidden'); else p.setAttribute('hidden', '');
   });
   $$('#tabs button, #tabbar button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab ? 'true' : 'false'));
-  if (tab === 'week') { renderWeekTab(); renderCalendar(); }
+  if (tab === 'week') { renderWeekTab(); renderWeekDayBar(); renderCalendar(); }
   if (tab === 'sticker') renderStickerTab();
   if (tab === 'letters') renderLetters();
   if (tab === 'settings') renderSettings();
@@ -1902,12 +2042,17 @@ function switchTab(tab) {
 
 /* ---------------- 항목 편집 모달 ---------------- */
 function openItemModal(mode) {
-  // mode: {scope:'date'|'template', kid, ds?, type?, item?}
+  // mode: {scope:'date'|'template', kid, ds?, type?, item?, after?}
   const kid = mode.kid, item = mode.item;
   const isNew = !item;
+  const isTpl = mode.scope === 'template';
+  const key = isTpl ? mode.type : dayKeyOf(mode.ds);
+  const done = () => { save(); closeModal(); renderAll(); if (mode.after) mode.after(); };
   openModal(
     sheetHead(isNew ? '할 일 추가' : '할 일 수정') +
-    '<p class="desc">' + (mode.scope === 'template' ? '이 요일 기본 목록에 저장돼요.' : mdn(mode.ds) + ' ' + DOW[parseYmd(mode.ds).getDay()] + '요일 목록에 저장돼요.') + '</p>' +
+    '<p class="desc">' + (isTpl
+      ? DLABEL[key] + '요일 기본 목록에 저장돼요. 매주 ' + DLABEL[key] + '요일에 이 목록으로 시작해요.'
+      : mdn(mode.ds) + ' ' + DOW[parseYmd(mode.ds).getDay()] + '요일 이 날에만 저장돼요.') + '</p>' +
     '<label>할 일 이름</label><input type="text" id="imText" value="' + esc(item ? item.text : '') + '" placeholder="예) 받아쓰기 10번 쓰기">' +
     '<label>강조 배지 (선택)</label><input type="text" id="imBadge" value="' + esc(item && item.badge ? item.badge : '') + '" placeholder="예) 꼭!">' +
     '<div class="foot">' + (isNew ? '' : '<button class="btn ghost left" id="imDel" style="color:#C9627F">삭제</button>') +
@@ -1920,39 +2065,40 @@ function openItemModal(mode) {
         const badge = $('#imBadge', root).value.trim();
         if (isNew) {
           const it = { id:uid(), text:text }; if (badge) it.badge = badge;
-          if (mode.scope === 'template') state.templates[kid][mode.type].push(it);
-          else { const e = dayEntry(kid, mode.ds, true); e.items.push(it); }
+          if (isTpl) { state.templates[kid][key].push(it); syncDayItems(kid, key); }
+          else { const e = dayEntry(kid, mode.ds, true); it.once = 1; e.items.push(it); }
         } else {
-          if (mode.scope === 'template') {
-            const arr = state.templates[kid][mode.type], t = arr.find(x => x.id === item.id);
+          if (isTpl) {
+            const arr = state.templates[kid][key], t = arr.find(x => x.id === item.id);
             if (t) { t.text = text; if (badge) t.badge = badge; else delete t.badge; }
+            syncDayItems(kid, key);
           } else {
             const e = dayEntry(kid, mode.ds, true), t = e.items.find(x => x.id === item.id);
             if (t) { t.text = text; if (badge) t.badge = badge; else delete t.badge; }
           }
         }
-        save(); closeModal(); renderAll(); toast(isNew ? '할 일을 추가했어요' : '수정했어요');
+        done(); toast(isNew ? '할 일을 추가했어요' : '수정했어요');
       });
       input.addEventListener('keydown', e => { if (e.key === 'Enter') $('#imSave', root).click(); });
       const del = $('#imDel', root);
       if (del) del.addEventListener('click', () => {
-        if (mode.scope === 'template') {
-          state.templates[kid][mode.type] = state.templates[kid][mode.type].filter(x => x.id !== item.id);
-        } else {
-          removeItem(kid, mode.ds, item.id, false);
-        }
-        save(); closeModal(); renderAll(); toast('삭제했어요');
+        if (isTpl) removeTemplateItem(kid, key, item.id);
+        else removeItem(kid, mode.ds, item.id);
+        done(); toast('삭제했어요');
       });
     } }
   );
 }
 
 /* ---------------- 일정 편집 모달 ---------------- */
-function openScheduleModal(dow, entry) {
+function openScheduleModal(dow, entry, after) {
   const isNew = !entry;
   const e = entry || { time:'', title:'', kind:'academy', prep:'', memo:'' };
+  const done = () => { save(); closeModal(); renderAll(); if (after) after(); };
   openModal(
     sheetHead((isNew ? '일정 추가' : '일정 수정') + ' · ' + DOW[dow] + '요일') +
+    '<label>요일</label><select id="smDow">' + DAY_ORDER.map(d =>
+      '<option value="' + d + '"' + (d === dow ? ' selected' : '') + '>' + DOW[d] + '요일</option>').join('') + '</select>' +
     '<label>시간</label><input type="text" id="smTime" value="' + esc(e.time) + '" placeholder="15:30">' +
     '<label>구분</label><select id="smKind">' + Object.keys(KIND_LABEL).map(k => '<option value="' + k + '"' + (e.kind === k ? ' selected' : '') + '>' + KIND_LABEL[k] + '</option>').join('') + '</select>' +
     '<label>내용</label><input type="text" id="smTitle" value="' + esc(e.title) + '" placeholder="예) 구몬, 태권도, 방과후 수학">' +
@@ -1965,19 +2111,125 @@ function openScheduleModal(dow, entry) {
       $('#smSave', root).addEventListener('click', () => {
         const title = $('#smTitle', root).value.trim();
         if (!title) { toast('일정 내용을 적어 주세요'); return; }
+        const target = parseInt($('#smDow', root).value, 10);
         const obj = { time:$('#smTime', root).value.trim(), title:title, kind:$('#smKind', root).value,
           prep:$('#smPrep', root).value.trim(), memo:$('#smMemo', root).value.trim() };
-        if (isNew) { obj.id = uid(); (state.schedule[dow] = state.schedule[dow] || []).push(obj); }
-        else { const t = (state.schedule[dow] || []).find(x => x.id === entry.id); if (t) Object.assign(t, obj); }
-        save(); closeModal(); renderAll(); toast(isNew ? '일정을 추가했어요' : '일정을 고쳤어요');
+        if (isNew) {
+          obj.id = uid();
+          (state.schedule[target] = state.schedule[target] || []).push(obj);
+        } else if (target === dow) {
+          const t = (state.schedule[dow] || []).find(x => x.id === entry.id); if (t) Object.assign(t, obj);
+        } else {
+          state.schedule[dow] = (state.schedule[dow] || []).filter(x => x.id !== entry.id);
+          obj.id = entry.id;
+          (state.schedule[target] = state.schedule[target] || []).push(obj);
+        }
+        done(); toast(isNew ? '일정을 추가했어요' : (target === dow ? '일정을 고쳤어요' : DOW[target] + '요일로 옮겼어요'));
       });
       const del = $('#smDel', root);
       if (del) del.addEventListener('click', () => {
         state.schedule[dow] = (state.schedule[dow] || []).filter(x => x.id !== entry.id);
-        save(); closeModal(); renderAll(); toast('일정을 지웠어요');
+        done(); toast('일정을 지웠어요');
       });
     } }
   );
+}
+
+/* ---------------- 요일 편집(주간·달력 탭) ---------------- */
+/* 월~일 칩을 누르면 그 요일의 기본 할 일 + 그 요일 주간 일정을 한 화면에서 고칩니다. */
+function dayItemRowHTML(it) {
+  return '<div class="deRow" data-id="' + it.id + '">' +
+    '<input type="text" value="' + esc(it.text) + '" data-de="rename" aria-label="할 일 이름">' +
+    (it.badge ? '<span class="tag">' + esc(it.badge) + '</span>' : '') +
+    '<button class="b" data-de="badge" aria-label="강조 배지"><svg><use href="#i-star"/></svg></button>' +
+    '<button class="b off" data-de="del" aria-label="삭제"><svg><use href="#i-trash"/></svg></button></div>';
+}
+function dayEntRowHTML(en) {
+  return '<button class="deRow ent k-' + (en.kind || 'etc') + '" data-ent="' + en.id + '" aria-label="일정 수정">' +
+    '<span class="tm">' + esc(en.time || '--:--') + '</span>' +
+    '<span class="tt">' + esc(en.title) + '</span>' +
+    (en.prep ? '<span class="pp">' + esc(en.prep) + '</span>' : '') +
+    '<span class="edit"><svg><use href="#i-edit"/></svg></span></button>';
+}
+function openDayEditor(dow) {
+  const kid = state.kid, key = DKEY[dow], K = KIDS[kid];
+  openModal(
+    sheetHead(DLABEL[key] + '요일 편집 · ' + K.name) +
+    '<p class="desc">이 요일의 <b>할 일</b>과 <b>주간 일정</b>을 한 번에 고쳐요. 할 일은 매주 ' + DLABEL[key] + '요일에 그대로 나와요.</p>' +
+    '<div class="seg deKid" id="deKid">' + ORDER.map(k =>
+      '<button data-kid="' + k + '" aria-pressed="' + (k === kid ? 'true' : 'false') + '">' + KIDS[k].name + '</button>').join('') + '</div>' +
+    '<div class="dayEdit">' +
+      '<div class="deCol"><div class="deHead"><b>할 일</b><span class="note" id="deItemN"></span>' +
+        '<button class="btn sm" data-de="add-item"><svg><use href="#i-plus"/></svg>추가</button></div>' +
+        '<div class="deList" id="deItems"></div></div>' +
+      '<div class="deCol"><div class="deHead"><b>일정</b><span class="note" id="deEntN"></span>' +
+        '<button class="btn sm" data-de="add-ent"><svg><use href="#i-plus"/></svg>추가</button></div>' +
+        '<div class="deList" id="deEnts"></div></div>' +
+    '</div>' +
+    '<div class="foot"><span class="note" style="margin-right:auto">바꾸면 앞으로의 ' + DLABEL[key] + '요일에 바로 반영돼요</span>' +
+    '<button class="btn pink" data-close="1">닫기</button></div>',
+    { cls:'wide', onMount: root => {
+      const paint = () => {
+        const k = state.kid;
+        const items = state.templates[k][key] || [];
+        const ents = (state.schedule[dow] || []).slice().sort((a, b) => String(a.time || '').localeCompare(String(b.time || '')));
+        $('#deKid', root).querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.kid === k ? 'true' : 'false'));
+        $('#deItemN', root).textContent = items.length + '개';
+        $('#deEntN', root).textContent = ents.length + '개';
+        $('#deItems', root).innerHTML = items.length ? items.map(dayItemRowHTML).join('')
+          : '<div class="note" style="padding:.4rem 0">이 요일 할 일이 비어 있어요</div>';
+        $('#deEnts', root).innerHTML = ents.length ? ents.map(dayEntRowHTML).join('')
+          : '<div class="note" style="padding:.4rem 0">이 요일 일정이 없어요</div>';
+      };
+      paint();
+
+      $('#deKid', root).addEventListener('click', ev => {
+        const b = ev.target.closest('button'); if (!b) return;
+        state.kid = b.dataset.kid; save();
+        ORDER.forEach(k => $$('#kids .kid[data-kid="' + k + '"]').forEach(x => x.setAttribute('aria-pressed', k === state.kid ? 'true' : 'false')));
+        renderAll(); paint();
+      });
+      root.addEventListener('click', ev => {
+        const add = ev.target.closest('[data-de]');
+        if (add && add.dataset.de === 'add-item') { openItemModal({ scope:'template', kid:state.kid, type:key, after:() => openDayEditor(dow) }); return; }
+        if (add && add.dataset.de === 'add-ent') { openScheduleModal(dow, null, () => openDayEditor(dow)); return; }
+        const ent = ev.target.closest('[data-ent]');
+        if (ent) {
+          const item = (state.schedule[dow] || []).find(x => x.id === ent.dataset.ent);
+          if (item) openScheduleModal(dow, item, () => openDayEditor(dow));
+          return;
+        }
+        const row = ev.target.closest('.deRow[data-id]'); if (!row) return;
+        const act = ev.target.closest('[data-de]'); if (!act) return;
+        const items = state.templates[state.kid][key] || [];
+        const it = items.find(x => x.id === row.dataset.id); if (!it) return;
+        if (act.dataset.de === 'del') {
+          removeTemplateItem(state.kid, key, it.id); save(); renderAll(); paint(); toast('지웠어요');
+        } else if (act.dataset.de === 'badge') {
+          if (it.badge) delete it.badge; else it.badge = '꼭!';
+          syncDayItems(state.kid, key); save(); renderAll(); paint();
+        }
+      });
+      root.addEventListener('change', ev => {
+        const inp = ev.target.closest('input[data-de="rename"]'); if (!inp) return;
+        const id = inp.closest('.deRow').dataset.id;
+        const it = (state.templates[state.kid][key] || []).find(x => x.id === id);
+        if (it) { it.text = inp.value.trim() || it.text; syncDayItems(state.kid, key); save(); renderAll(); paint(); }
+      });
+    } }
+  );
+}
+/* 주간 탭의 월~일 칩 */
+function renderWeekDayBar() {
+  const box = $('#weekDayChips'); if (!box) return;
+  const kid = state.kid;
+  box.innerHTML = DAY_ORDER.map(d => {
+    const key = DKEY[d];
+    const n = (state.templates[kid][key] || []).length;
+    const e = (state.schedule[d] || []).length;
+    return '<button data-dow="' + d + '" aria-label="' + DOW[d] + '요일 편집">' +
+      '<span>' + DOW[d] + '</span><b>' + n + '</b>' + (e ? '<i></i>' : '') + '</button>';
+  }).join('');
 }
 
 /* ---------------- 미니 카드 ---------------- */
@@ -2117,7 +2369,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const SYNC_ROW = 'monchhichi_main';
 const SYNC_ENDPOINT = SUPABASE_URL + '/rest/v1/family_state';
 const KEY_WIRE = KEY + '.wire';
-const TPL_TYPES = ['weekday', 'sat', 'sun'];
+const TPL_TYPES = DKEY;   /* 요일별 7개 목록을 그대로 동기화합니다 */
 
 let wirePrev = null;       /* 마지막으로 맞춘 문서 (바뀐 항목을 가려내는 기준) */
 let wireRemote = null;     /* 서버에서 마지막으로 받은 문서 */
@@ -2295,9 +2547,42 @@ function mergeList(la, lb, prefix, del) {
   return out;
 }
 
+/* 예전 문서(평일/토/일 3묶음)를 요일 7개 문서로 맞춰 줍니다.
+   기기에 남아 있던 옛 기록이나, 이미 서버에 올라가 있던 옛 문서도 그대로 이어받습니다. */
+function normTplOf(tpl, kid) {
+  const src = (tpl && tpl[kid]) || {};
+  const out = {};
+  const hasDay = DKEY.some(function (k) { return Array.isArray(src[k]); });
+  const clean = function (list) {
+    return (list || []).filter(function (it) { return it && it.id; }).map(function (it) {
+      const c = { id: it.id, text: it.text };
+      if (it.badge) c.badge = it.badge;
+      if (it._t) c._t = it._t;
+      if (it._o != null) c._o = it._o;
+      return c;
+    });
+  };
+  if (hasDay) {
+    DKEY.forEach(function (k) { out[k] = clean(src[k]); });
+  } else {
+    const wd = clean(src.weekday), sat = clean(src.sat), sun = clean(src.sun);
+    ['mon','tue','wed','thu','fri'].forEach(function (k) { out[k] = wd.map(function (x) { return clone(x); }); });
+    out.sat = sat; out.sun = sun;
+  }
+  return out;
+}
+function normDoc(w) {
+  if (!w || typeof w !== 'object') return w;
+  const out = clone(w);
+  out.tpl = {};
+  ORDER.forEach(function (kid) { out.tpl[kid] = normTplOf(w.tpl, kid); });
+  return out;
+}
+
 function mergeWire(a, b) {
-  if (!a) return b ? clone(b) : buildWire();
-  if (!b) return clone(a);
+  if (!a) return b ? normDoc(b) : buildWire();
+  if (!b) return normDoc(a);
+  a = normDoc(a); b = normDoc(b);
   const del = {};
   [(a.del || {}), (b.del || {})].forEach(function (m) {
     Object.keys(m).forEach(function (k) { del[k] = Math.max(Number(del[k]) || 0, Number(m[k]) || 0); });
@@ -2359,6 +2644,7 @@ function wireSig(w) {
 
 /* ---------- 3) 문서 → 이 기기 상태 ---------- */
 function applyWire(w) {
+  w = normDoc(w);
   ORDER.forEach(function (kid) {
     if (!state.templates[kid]) state.templates[kid] = {};
     TPL_TYPES.forEach(function (type) {
@@ -2390,6 +2676,7 @@ function applyWire(w) {
       const items = (x.items || []).map(function (it) {
         const c = { id: it.id, text: it.text };
         if (it.badge) c.badge = it.badge;
+        if (it.once) c.once = 1;
         return c;
       });
       if (!items.length && !Object.keys(done).length) return;
@@ -2439,7 +2726,9 @@ function syncRender() {
 function loadWireSnap() {
   try {
     const raw = localStorage.getItem(KEY_WIRE);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    const w = JSON.parse(raw);
+    return w ? normDoc(w) : null;
   } catch (e) { return null; }
 }
 function saveWireSnap() {
@@ -2452,7 +2741,7 @@ function applyRemote(remote) {
   wireSeeded = true;
   const local = buildWire();
   const merged = mergeWire(local, remote);
-  wireRemote = remote;
+  wireRemote = normDoc(remote);
   const before = contentSig();
   applyWire(merged);
   if (contentSig() !== before) { persistNow(); syncRender(); }
@@ -2462,7 +2751,7 @@ function applyRemote(remote) {
   syncLastError = '';
   markLinked();
   setSync(syncRealtimeOk ? 'live' : 'poll');
-  if (wireSig(local) !== wireSig(remote)) queueSync();
+  if (wireSig(local) !== wireSig(wireRemote)) queueSync();
 }
 
 async function syncPull() {
@@ -2485,9 +2774,10 @@ async function syncPull() {
     }
     if (!wireSeeded && !localExisted) {
       /* 새 기기: 가족 클라우드 기록을 그대로 받아 시작 */
-      applyWire(data);
-      wirePrev = data;
-      wireRemote = data;
+      const doc = normDoc(data);
+      applyWire(doc);
+      wirePrev = doc;
+      wireRemote = doc;
       wireSeeded = true;
       markLinked();
       syncLastAt = Date.now();
@@ -2638,9 +2928,11 @@ $$('#kids .kid').forEach(b => b.addEventListener('click', () => {
   save(); renderAll(); renderMiniSched();
   toast(KIDS[state.kid].name + '이 화면이에요');
 }));
-/* 보기 칩 */
+/* 보기 칩 (오늘 / 월~일 / 주간) */
 $$('#viewChips button').forEach(b => b.addEventListener('click', () => {
-  state.view = b.dataset.view; state.editMode = false; save(); renderToday();
+  state.view = b.dataset.view;
+  if (state.view === 'day') state.viewDow = parseInt(b.dataset.dow, 10);
+  state.editMode = false; save(); renderToday();
 }));
 /* 주간 바 날짜 */
 $('#wkDays').addEventListener('click', e => {
@@ -2661,43 +2953,55 @@ $('#todoGrid').addEventListener('click', e => {
   const hw = e.target.closest('#todoGrid .hwItem');
   if (hw) { toggleItem(state.kid, hw.dataset.date, hw.dataset.item); return; }
   const addBtn = e.target.closest('[data-act="add"]');
-  if (addBtn) { openItemModal({ scope: state.view === 'today' ? 'date' : 'template', kid:state.kid, ds:state.selDate, type:state.view === 'today' ? undefined : state.view }); return; }
+  if (addBtn) { openItemModal(itemModalMode()); return; }
   const card = e.target.closest('.todo'); if (!card) return;
   const itemId = card.dataset.item;
   if (state.editMode) {
     const tool = e.target.closest('[data-act]');
-    const isNew = !itemId;
-    const item = findItem(state.kid, state.selDate, itemId);
-    if (tool && tool.dataset.act === 'edit') { openItemModal({ scope:'date', kid:state.kid, ds:state.selDate, item:item }); return; }
+    const item = state.view === 'today' ? findItem(state.kid, state.selDate, itemId)
+      : (state.templates[state.kid][DKEY[state.viewDow]] || []).find(x => x.id === itemId);
+    if (tool && tool.dataset.act === 'edit') {
+      openItemModal(state.view === 'today'
+        ? { scope:'date', kid:state.kid, ds:state.selDate, item:item }
+        : { scope:'template', kid:state.kid, type:DKEY[state.viewDow], item:item });
+      return;
+    }
     if (tool && tool.dataset.act === 'del') {
-      removeItem(state.kid, state.selDate, itemId, false);
+      if (state.view === 'today') removeItem(state.kid, state.selDate, itemId);
+      else removeTemplateItem(state.kid, DKEY[state.viewDow], itemId);
       save(); renderAll(); toast('삭제했어요'); return;
     }
   }
-  if (state.view !== 'today') { toast('미리보기예요 · 해당 날짜 ‘오늘’ 화면에서 체크해요'); return; }
+  if (state.view !== 'today') { toast(DLABEL[DKEY[state.viewDow]] + '요일 기본 목록이에요 · 체크는 ‘오늘’ 화면에서 해요'); return; }
   toggleItem(state.kid, state.selDate, itemId);
 });
 $('#todoGrid').addEventListener('keydown', e => {
   if (e.key !== 'Enter' && e.key !== ' ') return;
   const card = e.target.closest('.todo'); if (!card) return;
   e.preventDefault();
-  if (state.view !== 'today') { toast('미리보기예요 · 해당 날짜에서 체크해요'); return; }
+  if (state.view !== 'today') { toast('요일 기본 목록이에요 · 체크는 ‘오늘’ 화면에서 해요'); return; }
   toggleItem(state.kid, state.selDate, card.dataset.item);
 });
 function findItem(kid, ds, id) {
   const e = dayEntry(kid, ds, false);
   if (e) { const t = e.items.find(x => x.id === id); if (t) return t; }
-  const tpl = state.templates[kid][dayType(ds)];
+  const tpl = state.templates[kid][dayKeyOf(ds)];
   return (tpl || []).find(x => x.id === id);
+}
+/* 지금 화면에서 ‘+ 할 일’이 어느 목록에 저장될지 */
+function itemModalMode(extra) {
+  const base = state.view === 'today'
+    ? { scope:'date', kid:state.kid, ds:state.selDate }
+    : { scope:'template', kid:state.kid, type:DKEY[state.viewDow] };
+  if (extra) Object.assign(base, extra);
+  return base;
 }
 /* 편집 / 추가 버튼 */
 $('#editBtn').addEventListener('click', () => {
   state.editMode = !state.editMode; save(); renderToday();
   if (state.editMode) toast('편집 모드 · 카드의 연필/휴지통을 눌러 주세요');
 });
-$('#addBtn').addEventListener('click', () => {
-  openItemModal({ scope: state.view === 'today' ? 'date' : 'template', kid:state.kid, ds:state.selDate, type:state.view === 'today' ? undefined : state.view });
-});
+$('#addBtn').addEventListener('click', () => { openItemModal(itemModalMode()); });
 /* 미니 카드 */
 $('#miniSticker').addEventListener('click', () => switchTab('sticker'));
 $('#miniSticker').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); switchTab('sticker'); } });
@@ -2725,6 +3029,8 @@ $('#weekNext').addEventListener('click', () => { state.weekOffset++; save(); ren
 $('#weekGrid').addEventListener('click', e => {
   const hw = e.target.closest('[data-item]');
   if (hw) { toggleItem(state.kid, hw.dataset.date, hw.dataset.item); return; }
+  const editDay = e.target.closest('[data-act="edit-day"]');
+  if (editDay) { openDayEditor(parseInt(editDay.dataset.dow, 10)); return; }
   const add = e.target.closest('[data-act="add-ent"]');
   if (add) { openScheduleModal(parseInt(add.dataset.dow, 10), null); return; }
   const del = e.target.closest('[data-act="del-ent"]');
@@ -2745,6 +3051,11 @@ $('#hwWrap') && $('#hwWrap').addEventListener('click', e => {
   const b = e.target.closest('[data-item]'); if (!b) return;
   toggleItem(state.kid, b.dataset.date, b.dataset.item);
 });
+/* 주간 탭 월~일 칩 → 그 요일 할 일·일정 편집 */
+$('#weekDayChips').addEventListener('click', e => {
+  const b = e.target.closest('[data-dow]'); if (!b) return;
+  openDayEditor(parseInt(b.dataset.dow, 10));
+});
 /* 달력 */
 $('#calPrev').addEventListener('click', () => {
   let m = state.calMonth.m - 1, y = state.calMonth.y;
@@ -2763,6 +3074,15 @@ $('#calGrid').addEventListener('click', e => {
 $('#calDetail').addEventListener('click', e => {
   const addEnt = e.target.closest('[data-act="add-cal-ent"]');
   if (addEnt) { openScheduleModal(parseYmd(state.selDate).getDay(), null); return; }
+  const editDay = e.target.closest('[data-act="edit-day"]');
+  if (editDay) { openDayEditor(parseInt(editDay.dataset.dow, 10)); return; }
+  const ent = e.target.closest('.sc-row[data-ent]');
+  if (ent) {
+    const dow = parseInt(ent.dataset.dow, 10);
+    const item = (state.schedule[dow] || []).find(x => x.id === ent.dataset.ent);
+    if (item) openScheduleModal(dow, item);
+    return;
+  }
   const k = e.target.closest('.kidpick button');
   if (k) {
     state.kid = k.dataset.kid; save();
@@ -2833,16 +3153,16 @@ $('#setList').addEventListener('click', e => {
   const id = row.dataset.id;
   const act = e.target.closest('[data-act]');
   if (!act) return;
-  const arr = state.templates[setKid][setType];
+  const arr = state.templates[setKid][setType] || [];
   const it = arr.find(x => x.id === id); if (!it) return;
-  if (act.dataset.act === 'del') { state.templates[setKid][setType] = arr.filter(x => x.id !== id); save(); renderSettings(); toast('지웠어요'); }
-  if (act.dataset.act === 'badge') { if (it.badge) delete it.badge; else it.badge = '꼭!'; save(); syncTemplateText(setKid, setType); renderSettings(); renderToday(); }
+  if (act.dataset.act === 'del') { removeTemplateItem(setKid, setType, id); save(); renderSettings(); renderToday(); toast('지웠어요'); }
+  if (act.dataset.act === 'badge') { if (it.badge) delete it.badge; else it.badge = '꼭!'; syncDayItems(setKid, setType); save(); renderSettings(); renderToday(); }
 });
 $('#setList').addEventListener('change', e => {
   const input = e.target.closest('input[data-act="rename"]'); if (!input) return;
   const id = input.closest('.itemRow').dataset.id;
-  const it = state.templates[setKid][setType].find(x => x.id === id);
-  if (it) { it.text = input.value.trim() || it.text; save(); syncTemplateText(setKid, setType); renderToday(); }
+  const it = (state.templates[setKid][setType] || []).find(x => x.id === id);
+  if (it) { it.text = input.value.trim() || it.text; syncDayItems(setKid, setType); save(); renderSettings(); renderToday(); }
 });
 $('#goalText').addEventListener('change', e => { state.goal = e.target.value.trim() || state.goal; save(); renderStickerTab(); });
 $('#syncNowBtn').addEventListener('click', () => syncNow());
@@ -2890,7 +3210,7 @@ $('#allReset').addEventListener('click', () => {
     '<div class="foot"><button class="btn" data-close="1">취소</button><button class="btn pink" id="doAll">모두 지우기</button></div>',
     { onMount: root => $('#doAll', root).addEventListener('click', () => {
       localStorage.removeItem(KEY); state = loadState(); state.selDate = todayStr();
-      setKid = 'yul'; setType = 'weekday';
+      setKid = 'yul'; setType = DKEY[new Date().getDay()];
       closeModal(); renderAll(); renderMiniSched(); renderWeather(); switchTab('today'); toast('처음 상태로 돌아갔어요');
     }) }
   );

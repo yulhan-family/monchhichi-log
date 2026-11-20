@@ -2473,8 +2473,14 @@ function stampList(prevList, list, prefix, now, del, soft) {
     const p = prevById[it.id];
     const changed = !p || metaOf(p) !== metaOf(it);
     const c = clone(it);
-    c._t = changed ? ((soft && blank) ? 0 : now) : (p._t || 0);
-    c._o = (p && p._o) ? p._o : now + i * 0.001;
+    /* 이 기기에서 실제로 고친 것만 '지금'으로 찍습니다.
+       다른 기기에서 받은 항목은 그 시각을 그대로 이어받아야 지운 항목이 되살아나지 않습니다. */
+    if (changed) {
+      if (p) c._t = now;
+      else if (it._t != null) c._t = Number(it._t);
+      else c._t = (soft && blank) ? 0 : now;
+    } else c._t = (p._t || 0);
+    c._o = (p && p._o) ? p._o : (it._o != null ? Number(it._o) : now + i * 0.001);
     seen[it.id] = true;
     out.push(c);
   });
@@ -2688,6 +2694,8 @@ function applyWire(w) {
       state.templates[kid][type] = list.map(function (it) {
         const c = { id: it.id, text: it.text };
         if (it.badge) c.badge = it.badge;
+        if (it._t != null) c._t = Number(it._t);
+        if (it._o != null) c._o = Number(it._o);
         return c;
       });
     });
@@ -2697,6 +2705,8 @@ function applyWire(w) {
       if (e.itemId) c.itemId = e.itemId;
       if (e.date) c.date = e.date;
       if (e.at) c.at = e.at;
+      if (e._t != null) c._t = Number(e._t);
+      if (e._o != null) c._o = Number(e._o);
       return c;
     }).sort(function (x, y) { return (y.at || 0) - (x.at || 0); });
   });
@@ -2713,6 +2723,8 @@ function applyWire(w) {
         const c = { id: it.id, text: it.text };
         if (it.badge) c.badge = it.badge;
         if (it.once) c.once = 1;
+        if (it._t != null) c._t = Number(it._t);
+        if (it._o != null) c._o = Number(it._o);
         return c;
       });
       if (!items.length && !Object.keys(done).length) return;
@@ -2723,13 +2735,19 @@ function applyWire(w) {
   state.days = days;
 
   state.letters = (w.letters || []).map(function (l) {
-    return { id: l.id, from: l.from, text: l.text, at: l.at, read: !!l.read };
+    const c = { id: l.id, from: l.from, text: l.text, at: l.at, read: !!l.read };
+    if (l._t != null) c._t = Number(l._t);
+    if (l._o != null) c._o = Number(l._o);
+    return c;
   }).sort(function (x, y) { return (y.at || 0) - (x.at || 0); });
 
   const sched = {};
   for (let d = 0; d < 7; d++) {
     sched[d] = (((w.sched || {})[d]) || []).map(function (s) {
-      return { id: s.id, time: s.time || '', title: s.title || '', kind: s.kind || 'etc', prep: s.prep || '', memo: s.memo || '' };
+      const c = { id: s.id, time: s.time || '', title: s.title || '', kind: s.kind || 'etc', prep: s.prep || '', memo: s.memo || '' };
+      if (s._t != null) c._t = Number(s._t);
+      if (s._o != null) c._o = Number(s._o);
+      return c;
     });
   }
   state.schedule = sched;

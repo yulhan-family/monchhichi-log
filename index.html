@@ -87,6 +87,11 @@ ul,ol{list-style:none}
 .syncPill.start{background:var(--yellow-pale);color:var(--yellow-ink);border-color:#F7E8B8}
 .syncPill.poll{background:#F1F7F2;color:var(--mint-deep);border-color:#D5EDDB}
 .syncPill.offline{background:#F5F1EA;color:var(--ink-faint);border-color:#E9E0D4}
+.syncPill.syncWide{display:none}
+@media (max-width:900px){
+  .syncPill.syncWide{display:inline-flex;margin-left:0}
+  .now-foot .syncPill.syncWide{order:-1}
+}
 
 .tabs{display:flex;align-items:center;gap:0.1rem;margin:0 auto;padding:0.22rem;border-radius:999px;
   background:rgba(255,255,255,.75);border:1px solid var(--line-2);box-shadow:var(--shadow-sm)}
@@ -822,7 +827,7 @@ body[data-kid="han"] .tip .n{background:var(--yellow-pale);color:var(--yellow-in
           <div class="now-line"><span id="nowDate">11월 20일 금요일</span><span class="chip pink pill" id="greeting">좋은 아침</span></div>
           <div class="clock"><span class="ampm" id="ampm">오전</span><span class="hhmm" id="clock">11:42</span><span class="sec" id="sec">:35</span></div>
           <div class="now-quote" id="nowQuote">오늘도 천천히, 하나씩!</div>
-          <div class="now-foot"><span id="dayNote">2026년 · 이번 주 5일째</span><span class="chip" id="selChip">오늘</span></div>
+          <div class="now-foot"><span id="dayNote">2026년 · 이번 주 5일째</span><i class="syncPill start syncWide" id="syncPillFoot" role="status" aria-live="polite">🟡 연결 중…</i><span class="chip" id="selChip">오늘</span></div>
         </div>
         <div class="card weekCard">
           <div class="wk-head"><b>이번 주</b><span class="mo" id="wkMonth">11월</span>
@@ -2153,14 +2158,16 @@ function setSync(s) {
 
 function paintSync() {
   const text = SYNC_TEXT[syncStatus] || SYNC_TEXT.start;
-  const pill = $('#syncPill');
-  if (pill) {
-    pill.className = 'syncPill ' + syncStatus;
-    pill.textContent = text;
-    pill.title = syncLastError
-      ? ('마지막 오류 · ' + syncLastError)
-      : (syncLastAt ? ('마지막 맞춤 ' + hmOf(syncLastAt)) : '가족 클라우드와 연결하는 중이에요');
-  }
+  const title = syncLastError
+    ? ('마지막 오류 · ' + syncLastError)
+    : (syncLastAt ? ('마지막 맞춤 ' + hmOf(syncLastAt)) : '가족 클라우드와 연결하는 중이에요');
+  ['#syncPill', '#syncPillFoot'].forEach(function (sel) {
+    const el = $(sel);
+    if (!el) return;
+    el.className = 'syncPill ' + syncStatus + (sel === '#syncPillFoot' ? ' syncWide' : '');
+    el.textContent = text;
+    el.title = title;
+  });
   const line = $('#syncLine');
   if (line) line.textContent = text + (syncLastAt ? ' · ' + hmOf(syncLastAt) : '');
 }

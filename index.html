@@ -1214,7 +1214,9 @@ function normalizeTemplates(t) {
   const out = {};
   ORDER.forEach(kid => {
     const src = (t && t[kid]) || {};
-    const hasDay = DKEY.some(k => Array.isArray(src[k]));
+    /* 예전 형식은 weekday(또는 아무것도) 없이 sat/sun만 요일 키와 이름이 겹칩니다.
+       그래서 '요일별 새 형식'은 월~금 키가 있는지로 판단합니다. */
+    const hasDay = ['mon','tue','wed','thu','fri'].some(k => Array.isArray(src[k]));
     if (!hasDay) { out[kid] = migrateLegacyTemplates(t)[kid]; return; }
     const week = {};
     DKEY.forEach(k => {
@@ -2377,6 +2379,7 @@ let wireSeeded = false;    /* 서버 기록을 한 번이라도 맞춰 봤는지
 let syncStatus = 'start';  /* start | live | poll | offline */
 let syncRealtimeOk = false;
 let syncBusy = false;
+let syncForce = false;   /* 형식이 바뀐 문서를 한 번은 그대로 올리기 */
 let syncPushTimer = 0;
 let syncPullTimer = 0;
 let syncLastAt = 0;
@@ -2438,10 +2441,13 @@ function metaOf(it) {
   return JSON.stringify(c);
 }
 
-/* 목록을 훑어 바뀐 항목에만 시각(_t)을 새로 찍고, 사라진 항목은 묘비로 남깁니다 */
-function stampList(prevList, list, prefix, now, del) {
+/* 목록을 훑어 바뀐 항목에만 시각(_t)을 새로 찍고, 사라진 항목은 묘비로 남깁니다
+   soft=true(요일 기본 목록)는 이 기기에 그 목록의 지난 기록이 없을 때 새 항목에 0을 찍습니다.
+   그래야 새 기기의 기본 목록이 가족이 지워 둔 항목을 되살리지 않습니다. */
+function stampList(prevList, list, prefix, now, del, soft) {
   const prevById = {};
   (prevList || []).forEach(function (it) { if (it && it.id) prevById[it.id] = it; });
+  const blank = !(prevList || []).length;   /* 이 목록에 대한 지난 정보가 없음 */
   const seen = {};
   const out = [];
   (list || []).forEach(function (it, i) {
@@ -2449,7 +2455,7 @@ function stampList(prevList, list, prefix, now, del) {
     const p = prevById[it.id];
     const changed = !p || metaOf(p) !== metaOf(it);
     const c = clone(it);
-    c._t = changed ? now : (p._t || 0);
+    c._t = changed ? ((soft && blank) ? 0 : now) : (p._t || 0);
     c._o = (p && p._o) ? p._o : now + i * 0.001;
     seen[it.id] = true;
     out.push(c);
@@ -2477,7 +2483,7 @@ function buildWire() {
       w.tpl[kid][type] = stampList(
         p && p.tpl && p.tpl[kid] ? p.tpl[kid][type] : null,
         state.templates[kid][type] || [],
-        'tpl.' + kid + '.' + type, now, del
+        'tpl.' + kid + '.' + type, now, del, true
       );
     });
     w.ledger[kid] = stampList(p && p.ledger ? p.ledger[kid] : null, state.ledger[kid] || [], 'led.' + kid, now, del);
@@ -2552,7 +2558,7 @@ function mergeList(la, lb, prefix, del) {
 function normTplOf(tpl, kid) {
   const src = (tpl && tpl[kid]) || {};
   const out = {};
-  const hasDay = DKEY.some(function (k) { return Array.isArray(src[k]); });
+  const hasDay = ['mon','tue','wed','thu','fri'].some(function (k) { return Array.isArray(src[k]); });
   const clean = function (list) {
     return (list || []).filter(function (it) { return it && it.id; }).map(function (it) {
       const c = { id: it.id, text: it.text };
@@ -2576,6 +2582,14 @@ function normDoc(w) {
   const out = clone(w);
   out.tpl = {};
   ORDER.forEach(function (kid) { out.tpl[kid] = normTplOf(w.tpl, kid); });
+  /* 예전 '평일' 목록에서 지운 항목의 묘비를 요일별 묘비로도 옮겨 둡니다 */
+  const del = {};
+  Object.keys(out.del || {}).forEach(function (k) {
+    const m = /^tpl\.(yul|han)\.weekday:(.+)$/.exec(k);
+    if (m) { ['mon','tue','wed','thu','fri'].forEach(function (d) { del['tpl.' + m[1] + '.' + d + ':' + m[2]] = out.del[k]; }); }
+    else del[k] = out.del[k];
+  });
+  out.del = del;
   return out;
 }
 
@@ -2739,6 +2753,7 @@ function saveWireSnap() {
 function applyRemote(remote) {
   if (!remote || typeof remote !== 'object' || (!remote.tpl && !remote.v)) return;
   wireSeeded = true;
+  const wasLegacy = !!(remote.tpl && remote.tpl.yul && Array.isArray(remote.tpl.yul.weekday));
   const local = buildWire();
   const merged = mergeWire(local, remote);
   wireRemote = normDoc(remote);
@@ -2751,7 +2766,8 @@ function applyRemote(remote) {
   syncLastError = '';
   markLinked();
   setSync(syncRealtimeOk ? 'live' : 'poll');
-  if (wireSig(local) !== wireSig(wireRemote)) queueSync();
+  if (wasLegacy) { syncForce = true; queueSync(); }
+  else if (wireSig(local) !== wireSig(wireRemote)) queueSync();
 }
 
 async function syncPull() {
@@ -2812,7 +2828,8 @@ async function syncPush() {
   if (navigator.onLine === false) { setSync('offline'); return; }
   if (syncBusy) { scheduleSyncFlush(500); return; }
   const local = buildWire();
-  if (wirePrev && wireSig(local) === wireSig(wirePrev)) return;   /* 바뀐 게 없음 */
+  if (!syncForce && wirePrev && wireSig(local) === wireSig(wirePrev)) return;   /* 바뀐 게 없음 */
+  syncForce = false;
   syncBusy = true;
   const body = wireRemote ? mergeWire(local, wireRemote) : local;
   try {

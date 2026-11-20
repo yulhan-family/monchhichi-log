@@ -1164,6 +1164,14 @@ const monStart = d => { const x = new Date(d.getFullYear(), d.getMonth(), d.getD
 const weekOffsetFor = ds => Math.round((monStart(parseYmd(ds)) - monStart(new Date())) / (7 * 86400000));
 const dayKeyOf = s => DKEY[parseYmd(s).getDay()];   /* 날짜 → 요일 키 */
 const clone = o => JSON.parse(JSON.stringify(o));
+/* 지운 항목 표시(묘비): 30일 동안 남겨 두고 정리합니다 */
+const DEL_TTL = 30 * 864e5;
+function markDel(key) {
+  if (!state.del) state.del = {};
+  state.del[key] = Date.now();
+  const cut = Date.now() - DEL_TTL;
+  Object.keys(state.del).forEach(k => { if (state.del[k] < cut) delete state.del[k]; });
+}
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money = n => Number(n || 0).toLocaleString('ko-KR');
 const mdn = s => { const d = parseYmd(s); return (d.getMonth() + 1) + '월 ' + d.getDate() + '일'; };
@@ -1258,6 +1266,7 @@ function defaultState() {
     stickers: { yul:{ filled:0, completed:0, total:0 }, han:{ filled:0, completed:0, total:0 } },
     ledger: { yul:[], han:[] },
     letters: [],
+    del: {},                /* 지운 항목의 묘비 {키: 시각} — 다른 기기에서 되살아나지 않게 */
     letterFrom: '엄마',
     schedule: defaultSchedule(),
     goal: '30칸을 모으면 갖고 싶은 선물!',
@@ -1284,6 +1293,7 @@ function loadState() {
     if (['today','week','day'].indexOf(merged.view) < 0) merged.view = 'today';
     if (typeof merged.viewDow !== 'number' || merged.viewDow < 0 || merged.viewDow > 6) merged.viewDow = new Date().getDay();
     merged.days = s.days || {};
+    merged.del = (s.del && typeof s.del === 'object') ? s.del : {};
     merged.schedule = Object.assign(defaultSchedule(), s.schedule || {});
     merged.timer = Object.assign({ preset:20, remaining:1200, running:false, endAt:null }, s.timer || {});
     return merged;
@@ -1710,17 +1720,22 @@ function renderStickerTab() {
 function dropLedgerRef(kid, ds, itemId) {
   const ref = ds + '|' + itemId;
   const i = (state.ledger[kid] || []).findIndex(x => x.ref === ref);
-  if (i >= 0) state.ledger[kid].splice(i, 1);
+  if (i >= 0) {
+    markDel('led.' + kid + ':' + state.ledger[kid][i].id);
+    state.ledger[kid].splice(i, 1);
+  }
   recomputeStickers();
 }
 function removeItem(kid, ds, itemId) {
   const e = dayEntry(kid, ds, true);
   if (e.done[itemId]) { delete e.done[itemId]; dropLedgerRef(kid, ds, itemId); }
   e.items = e.items.filter(x => x.id !== itemId);
+  markDel('it.' + ds + '.' + kid + ':' + itemId);
 }
 /* 요일 기본 목록에서 지우기 (앞으로의 그 요일 + 아직 지나지 않은 날짜에도 반영) */
 function removeTemplateItem(kid, key, itemId) {
   state.templates[kid][key] = (state.templates[kid][key] || []).filter(x => x.id !== itemId);
+  markDel('tpl.' + kid + '.' + key + ':' + itemId);
   syncDayItems(kid, key);
 }
 
@@ -1739,6 +1754,7 @@ function syncDayItems(kid, key) {
       if (it.once) return;
       if (!tpl.some(t => t.id === it.id)) {
         if (e.done[it.id]) { delete e.done[it.id]; dropLedgerRef(kid, ds, it.id); }
+        markDel('it.' + ds + '.' + kid + ':' + it.id);
       }
     });
     const next = tpl.map(t => {
@@ -2123,6 +2139,7 @@ function openScheduleModal(dow, entry, after) {
           const t = (state.schedule[dow] || []).find(x => x.id === entry.id); if (t) Object.assign(t, obj);
         } else {
           state.schedule[dow] = (state.schedule[dow] || []).filter(x => x.id !== entry.id);
+          markDel('sch.' + dow + ':' + entry.id);
           obj.id = entry.id;
           (state.schedule[target] = state.schedule[target] || []).push(obj);
         }
@@ -2131,6 +2148,7 @@ function openScheduleModal(dow, entry, after) {
       const del = $('#smDel', root);
       if (del) del.addEventListener('click', () => {
         state.schedule[dow] = (state.schedule[dow] || []).filter(x => x.id !== entry.id);
+        markDel('sch.' + dow + ':' + entry.id);
         done(); toast('일정을 지웠어요');
       });
     } }
@@ -2470,6 +2488,9 @@ function buildWire() {
   const now = Date.now();
   const p = wirePrev;
   const del = {};
+  /* 이 기기에서 지운 항목의 묘비를 먼저 담습니다 (다른 기기에서 되살아나지 않게) */
+  const cutOwn = now - DEL_TTL;
+  Object.keys(state.del || {}).forEach(k => { if (Number(state.del[k]) > cutOwn) del[k] = Number(state.del[k]); });
   const w = {
     v: 1, t: now,
     tpl: {}, days: {}, ledger: {}, letters: [], sched: {},
@@ -2530,6 +2551,7 @@ function buildWire() {
   Object.keys(pdel).forEach(function (k) { if (Number(pdel[k]) > cut) outDel[k] = Number(pdel[k]); });
   Object.keys(del).forEach(function (k) { outDel[k] = Math.max(outDel[k] || 0, del[k]); });
   w.del = outDel;
+  state.del = outDel;      /* 이 기기에도 같은 묘비를 남겨 둡니다 */
   return w;
 }
 
@@ -2713,6 +2735,9 @@ function applyWire(w) {
   state.schedule = sched;
 
   if (w.goal && typeof w.goal.text === 'string' && w.goal.text) state.goal = w.goal.text;
+  const cutD = Date.now() - DEL_TTL;
+  state.del = {};
+  Object.keys(w.del || {}).forEach(function (k) { if (Number(w.del[k]) > cutD) state.del[k] = Number(w.del[k]); });
   recomputeStickers();
 }
 
@@ -2720,7 +2745,7 @@ function contentSig() {
   try {
     return JSON.stringify({
       templates: state.templates, days: state.days, ledger: state.ledger,
-      letters: state.letters, schedule: state.schedule, goal: state.goal
+      letters: state.letters, schedule: state.schedule, goal: state.goal, del: state.del
     });
   } catch (e) { return String(Math.random()); }
 }
@@ -3066,6 +3091,7 @@ $('#weekGrid').addEventListener('click', e => {
     const ent = del.closest('[data-ent]');
     const dow = parseInt(ent.dataset.dow, 10);
     state.schedule[dow] = (state.schedule[dow] || []).filter(x => x.id !== ent.dataset.ent);
+    markDel('sch.' + dow + ':' + ent.dataset.ent);
     save(); renderWeekTab(); renderMiniSched(); toast('일정을 지웠어요'); return;
   }
   const row = e.target.closest('[data-ent]');
@@ -3152,6 +3178,7 @@ $('#letters').addEventListener('click', e => {
   if (del) {
     const id = del.closest('[data-letter]').dataset.letter;
     state.letters = state.letters.filter(l => l.id !== id);
+    markDel('letter:' + id);
     save(); renderLetters(); toast('쪽지를 지웠어요');
   }
 });

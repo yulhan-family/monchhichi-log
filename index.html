@@ -2563,7 +2563,7 @@ function normTplOf(tpl, kid) {
     return (list || []).filter(function (it) { return it && it.id; }).map(function (it) {
       const c = { id: it.id, text: it.text };
       if (it.badge) c.badge = it.badge;
-      if (it._t) c._t = it._t;
+      if (it._t != null) c._t = it._t;
       if (it._o != null) c._o = it._o;
       return c;
     });
@@ -2831,7 +2831,18 @@ async function syncPush() {
   if (!syncForce && wirePrev && wireSig(local) === wireSig(wirePrev)) return;   /* 바뀐 게 없음 */
   syncForce = false;
   syncBusy = true;
-  const body = wireRemote ? mergeWire(local, wireRemote) : local;
+  /* 올리기 직전에 서버의 최신 문서를 한 번 더 읽어 합칩니다.
+     다른 기기가 방금 올린 내용(지운 표시 포함)을 덮어쓰지 않도록 하는 장치입니다. */
+  let remoteNow = wireRemote;
+  try {
+    const r2 = await fetch(SYNC_ENDPOINT + '?id=eq.' + SYNC_ROW + '&select=data', { headers: syncHeaders(), cache: 'no-store' });
+    if (r2.ok) {
+      const rows2 = await r2.json();
+      const d2 = rows2 && rows2[0] ? rows2[0].data : null;
+      if (d2 && typeof d2 === 'object' && d2.tpl) remoteNow = normDoc(d2);
+    }
+  } catch (e) { /* 못 읽으면 지금까지 맞춘 문서로 올립니다 */ }
+  const body = remoteNow ? mergeWire(local, remoteNow) : local;
   try {
     const res = await fetch(SYNC_ENDPOINT + '?id=eq.' + SYNC_ROW + '&select=id', {
       method: 'PATCH',
